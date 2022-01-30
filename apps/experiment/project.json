@@ -1,0 +1,73 @@
+{
+  "root": "apps/experiment",
+  "sourceRoot": "apps/experiment/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/experiment",
+        "index": "apps/experiment/src/index.html",
+        "baseHref": "/",
+        "main": "apps/experiment/src/main.tsx",
+        "polyfills": "apps/experiment/src/polyfills.ts",
+        "tsConfig": "apps/experiment/tsconfig.app.json",
+        "assets": [
+          "apps/experiment/src/favicon.ico",
+          "apps/experiment/src/assets"
+        ],
+        "styles": ["apps/experiment/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/experiment/src/environments/environment.ts",
+              "with": "apps/experiment/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "experiment:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "experiment:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/experiment/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/experiment"],
+      "options": {
+        "jestConfig": "apps/experiment/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
